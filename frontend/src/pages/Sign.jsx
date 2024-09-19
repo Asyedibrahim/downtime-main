@@ -20,12 +20,12 @@ export default function Sign() {
                         </h1>
                         <form className="space-y-4 md:space-y-6" action="#">
                             <div>
-                                <label for="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Your email</label>
+                                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Your email</label>
                                 <input type="email" name="email" id="email" className="bg-gray-50 border border-green-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-primary dark:border-green-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="name@company.com" required="">
                                 </input>
                             </div>
                             <div>
-                                <label for="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Password</label>
+                                <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Password</label>
                                 <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-primary dark:border-green-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
                                 </input>
                             </div>
@@ -36,7 +36,7 @@ export default function Sign() {
                                         </input>
                                     </div>
                                     <div className="ml-3 text-sm">
-                                        <label for="remember" className="text-gray-500 dark:text-black">Remember me</label>
+                                        <label htmlFor="remember" className="text-gray-500 dark:text-black">Remember me</label>
                                     </div>
                                 </div>
                                 <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-black">Forgot password?</a>

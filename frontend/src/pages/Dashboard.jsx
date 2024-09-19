@@ -1,7 +1,23 @@
 import Foot from './Foot';
 import back2 from '../assets/images/Back1.jpg'
+import { useEffect, useState } from 'react';
 
 export default function Dashboard() {
+
+  const [fetchUrl, setFetchUrl] = useState([]);
+
+  useEffect(() => {
+    const fetchUrl = async () => {
+      const res = await fetch('/api/website/checkStatus');
+      const data = await res.json();
+      if (res.ok) {
+        setFetchUrl(data)
+      }
+    }
+
+    fetchUrl();
+  }, []);
+
   return (
     <div className="bg-cover min-h-screen" style={{ backgroundImage: `url(${back2})` }}>
       <div className="backdrop-blur-sm min-h-screen flex flex-col">
@@ -38,9 +54,10 @@ export default function Dashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="bg-white border-b dark:bg-gray-100 dark:border-gray-700">
+                  {fetchUrl && fetchUrl.map((url) => (
+                    <tr className="bg-white border-b dark:bg-gray-100 dark:border-gray-700" key={url._id}>
                       <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
-                        http//test.com
+                        {url.url}
                       </th>
                       <td className="px-6 py-4">Up</td>
                       <td className="px-6 py-4">Active</td>
@@ -50,6 +67,7 @@ export default function Dashboard() {
                         <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                       </td>
                     </tr>
+                  ))}
                     {/* Add real data or handle empty rows */}
                     <tr>
                       <td colSpan="6" className="px-6 py-4 text-center text-gray-500">No data available</td>

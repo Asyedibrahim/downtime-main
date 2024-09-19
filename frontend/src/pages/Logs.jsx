@@ -1,7 +1,33 @@
+import { useEffect, useState } from 'react';
 import back2 from '../assets/images/Back1.jpg';
 import Foot from './Foot';
 
 export default function Logs() {
+  const [urlLogs, setUrlLogs] = useState([]); // For logs and status
+
+  // Fetch URLs and their statuses from the server
+  useEffect(() => {
+    const fetchStatus = async () => {
+      try {
+        const res = await fetch('/api/website/checkStatus');
+        const data = await res.json();
+        if (res.ok) {
+          setUrlLogs(data);
+        } else {
+          console.error('Failed to fetch URL statuses:', data);
+        }
+      } catch (error) {
+        console.error('Error fetching URL statuses:', error);
+      }
+    };
+
+    fetchStatus();
+
+    // Set interval for polling (optional)
+    const interval = setInterval(fetchStatus, 30000); // 30 seconds
+    return () => clearInterval(interval); // Clean up interval on unmount
+  }, []);
+  
   return (
     <div className="bg-cover min-h-screen" style={{ backgroundImage: `url(${back2})` }}>
       <div className="backdrop-blur-sm min-h-screen flex flex-col">
@@ -11,7 +37,8 @@ export default function Logs() {
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-lime-200 dark:text-black">
                 <tr>
-                  <th scope="col" className="px-6 py-3">URL Status</th>
+                  <th scope="col" className="px-6 py-3">URL</th>
+                  <th scope="col" className="px-6 py-3">Status</th>
                   <th scope="col" className="px-6 py-3">Start At</th>
                   <th scope="col" className="px-6 py-3">End At</th>
                   <th scope="col" className="px-6 py-3">Duration</th>
@@ -19,25 +46,24 @@ export default function Logs() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b border-gray-200 dark:border-gray-700">
-                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-black dark:bg-lime-200">
-                    http://example.com
-                  </th>
-                  <td className="px-6 py-4">2020-08-08 06:46:07</td>
-                  <td className="px-6 py-4 bg-gray-50 dark:bg-lime-200">2020-08-08 06:49:06</td>
-                  <td className="px-6 py-4">2min, 59s</td>
-                  <td className="px-6 py-4 bg-gray-50 dark:bg-lime-200">503</td>
-                </tr>
-                <tr className="border-b border-gray-200 dark:border-gray-700">
-                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-black dark:bg-lime-200">
-                    http://another-example.com
-                  </th>
-                  <td className="px-6 py-4">2020-08-01 05:02:01</td>
-                  <td className="px-6 py-4 bg-gray-50 dark:bg-lime-200">2020-08-01 05:22:43</td>
-                  <td className="px-6 py-4">20min, 42s</td>
-                  <td className="px-6 py-4 bg-gray-50 dark:bg-lime-200">404</td>
-                </tr>
-                
+                {urlLogs.length > 0 ? (
+                  urlLogs.map((log, index) => (
+                    <tr key={index} className="border-b border-gray-200 dark:border-gray-700">
+                      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-black dark:bg-lime-200">
+                        <a href={log.url} target='_blank' rel="noopener noreferrer">{log.url}</a>
+                      </th>
+                      <td className="px-6 py-4">{log.status}</td>
+                      <td className="px-6 py-4">{log.startAt}</td>
+                      <td className="px-6 py-4 bg-gray-50 dark:bg-lime-200">{log.endAt}</td>
+                      <td className="px-6 py-4">{log.duration}</td>
+                      <td className="px-6 py-4 bg-gray-50 dark:bg-lime-200">{log.httpCode}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td className="px-6 py-4" colSpan="6">Loading logs...</td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
