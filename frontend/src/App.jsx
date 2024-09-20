@@ -4,9 +4,8 @@ import Dashboard from './pages/Dashboard';
 import Add from './pages/Add';
 import Logs from './pages/Logs';
 import Account from './pages/Account';
-import Sign from './pages/Sign';
-import Reg from './pages/Reg';
 import Header from './components/Header';
+import Edit from './pages/Edit';
 
 export default function App() {
   return (
@@ -18,8 +17,7 @@ export default function App() {
         <Route path="/add" element={<Add />} />
         <Route path="/log" element={<Logs />} />
         <Route path="/acc" element={<Account />} />
-        <Route path="/sign" element={<Sign />} />
-        <Route path="/reg" element={<Reg />} />
+        <Route path="/edit/:id" element={<Edit />} />
       </Routes>
     </BrowserRouter>
   )

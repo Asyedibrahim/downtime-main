@@ -3,9 +3,9 @@ import back2 from '../assets/images/Back1.jpg';
 import Foot from './Foot';
 
 export default function Logs() {
-  const [urlLogs, setUrlLogs] = useState([]); // For logs and status
 
-  // Fetch URLs and their statuses from the server
+  const [urlLogs, setUrlLogs] = useState([]);
+
   useEffect(() => {
     const fetchStatus = async () => {
       try {
@@ -23,10 +23,11 @@ export default function Logs() {
 
     fetchStatus();
 
-    // Set interval for polling (optional)
-    const interval = setInterval(fetchStatus, 30000); // 30 seconds
-    return () => clearInterval(interval); // Clean up interval on unmount
+    const interval = setInterval(fetchStatus, 1800000);
+    return () => clearInterval(interval);
   }, []);
+
+  const downUrls = urlLogs.filter((log) => log.status.toLowerCase() === 'down')
   
   return (
     <div className="bg-cover min-h-screen" style={{ backgroundImage: `url(${back2})` }}>
@@ -39,29 +40,25 @@ export default function Logs() {
                 <tr>
                   <th scope="col" className="px-6 py-3">URL</th>
                   <th scope="col" className="px-6 py-3">Status</th>
-                  <th scope="col" className="px-6 py-3">Start At</th>
-                  <th scope="col" className="px-6 py-3">End At</th>
-                  <th scope="col" className="px-6 py-3">Duration</th>
+                  <th scope="col" className="px-6 py-3">Checked At</th>
                   <th scope="col" className="px-6 py-3">HTTP</th>
                 </tr>
               </thead>
               <tbody>
-                {urlLogs.length > 0 ? (
-                  urlLogs.map((log, index) => (
+                {downUrls.length > 0 ? (
+                  downUrls.map((log, index) => (
                     <tr key={index} className="border-b border-gray-200 dark:border-gray-700">
-                      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-black dark:bg-lime-200">
+                      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                         <a href={log.url} target='_blank' rel="noopener noreferrer">{log.url}</a>
                       </th>
                       <td className="px-6 py-4">{log.status}</td>
                       <td className="px-6 py-4">{log.startAt}</td>
-                      <td className="px-6 py-4 bg-gray-50 dark:bg-lime-200">{log.endAt}</td>
-                      <td className="px-6 py-4">{log.duration}</td>
-                      <td className="px-6 py-4 bg-gray-50 dark:bg-lime-200">{log.httpCode}</td>
+                      <td className="px-6 py-4">{log.httpCode}</td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td className="px-6 py-4" colSpan="6">Loading logs...</td>
+                    <td className="px-6 py-4 text-center" colSpan="6">No logs available!!</td>
                   </tr>
                 )}
               </tbody>

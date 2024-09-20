@@ -4,7 +4,6 @@ import { Link, useLocation } from 'react-router-dom'
 
 export default function Header() {
 
-  const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
   return (
@@ -33,27 +32,7 @@ export default function Header() {
                 <li>
                     <Link to='/log' className={`block py-2 px-3 rounded md:border-0 md:p-0 ${location.pathname === '/log' ? ' text-green-500 font-bold' : 'text-white dark:hover:text-green-500'}`}>Logs</Link>
                 </li>
-                <li>
-                    <ul className="block py-2 px-3 text-white rounded hover:bg-green-100 md:hover:bg-transparent md:border-0 md:hover:text-black-100 md:p-0 dark:text-black md:dark:hover:text-green-500 dark:hover:bg-green-700 dark:hover:text-white md:dark:hover:bg-transparent">
-                        <button onClick={() => setIsOpen(!isOpen)} type="button" className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-green-500 dark:bg-green-600 md:dark:bg-transparent" aria-current="page" id="menu-button" aria-expanded="true" aria-haspopup="true">
-                            Username
-                        </button>
-                    </ul>
-                </li>
             </ul>
-            {isOpen && (
-              <ul role="menu" data-popover="menu" data-popover-placement="bottom"
-                className="absolute z-10 w-62 py-6 px-2 ml-40  overflow-auto rounded-md border border-blue-gray-50 bg-white font-sans text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none">
-                <Link to='/acc' role="menuitem"
-                    className="block w-full cursor-pointer text-center select-none rounded-md hover:text-green-500 font-semibold leading-tight transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                    Account Settings
-                </Link>
-                <button role="menuitem"
-                    className="block w-full cursor-pointer text-center select-none rounded-md px-3 pt-[9px] pb-2 font-semibold hover:text-green-500  leading-tight transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                    Log out
-                </button>
-              </ul>
-            )}
           </div>
         </div>
       </nav>
