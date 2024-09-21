@@ -92,18 +92,18 @@ export default function Dashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {currentRows.length > 0 ? currentRows.map((url) => (
-                      <tr className="bg-white border-b dark:bg-gray-100 dark:border-gray-700" key={url._id}>
+                    {currentRows.length > 0 ? currentRows.map((log) => (
+                      <tr className="bg-white border-b dark:bg-gray-100 dark:border-gray-700" key={log._id}>
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-black">
-                          {url.url}
+                        <a href={log.url} target='_blank' rel="noopener noreferrer">{log.url}</a>
                         </th>
-                        <td className="px-6 py-4">{url.status}</td>
-                        <td className="px-6 py-4">{url.httpCode}</td>
+                        <td className="px-6 py-4">{log.status}</td>
+                        <td className="px-6 py-4">{log.httpCode}</td>
                         <td className="px-6 py-4">
-                          <Link to={`/edit/${url._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</Link>
+                          <Link to={`/edit/${log._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</Link>
                         </td>
                         <td className="px-6 py-4">
-                          <button onClick={() => handleDelete(url._id)} className="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>
+                          <button onClick={() => handleDelete(log._id)} className="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>
                         </td>
                       </tr>
                     )) : (
